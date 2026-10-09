@@ -39,22 +39,11 @@ A demo mostra o mesmo contato antes e depois de receber evidência sintética, a
 
 ## Arquitetura deste recorte
 
-```mermaid
-flowchart LR
-  Fixture[Dados sintéticos] --> Provider[MockProvider]
-  Provider --> Extract[ExtractOnly]
-  Extract --> Normalize[normalize]
-  Extract --> Store[ExtractRepository: fake nos testes]
-  Normalize --> Contact[assessContact]
-  Evidence[Evidência fornecida] --> Contact
-  Signals[Observações com fonte] --> Offer[analyzeOpportunity]
-  Contact --> Draft[createDraft]
-  Offer --> Draft
-  Reply[Texto de resposta] --> Classify[classifyReply]
-  Dispatch[dispatch] --> Claim[DispatchStore: fake nos testes]
-  Dispatch --> Sender[MessageSender: mock ou fake]
-  Dispatch --> Outcome[accepted ou uncertain]
-```
+![Arquitetura do recorte Hearts: coleta e decisões, classificação de resposta e despacho em fluxos independentes.](assets/core-flow.svg)
+
+[Fonte do diagrama em Mermaid](docs/core-flow.mmd).
+
+As setas indicam dependências e passagem de dados. `ExtractOnly` não encadeia automaticamente avaliação, rascunho ou despacho.
 
 As duas interfaces de persistência são pontos de integração. Este repositório não implementa o store de produção. Veja o [mapa de arquitetura](docs/ARCHITECTURE.md) para os contratos e a diferença entre o subset e o sistema de origem.
 

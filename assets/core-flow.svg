@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="1312" viewBox="0 0 760 1312" role="img" aria-labelledby="diagram-title diagram-description">
+  <title id="diagram-title">Hearts — arquitetura deste recorte</title>
+  <desc id="diagram-description">Três fluxos independentes. Dados sintéticos passam por MockProvider e ExtractOnly, que chama normalize e ExtractRepository. normalize e evidência fornecida alimentam assessContact. Observações com fonte alimentam analyzeOpportunity. assessContact e analyzeOpportunity alimentam createDraft. Texto de resposta alimenta classifyReply. dispatch se conecta a DispatchStore, MessageSender e ao resultado accepted ou uncertain. Os stores são fakes nos testes; o sender é mock ou fake.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 1 1 L 9 5 L 1 9 Z" fill="#555555" />
+    </marker>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: #181818; }
+      .heading { font-size: 28px; font-weight: 650; }
+      .subtitle { font-size: 17px; fill: #595959; }
+      .section { font-size: 20px; font-weight: 650; }
+      .index { font-size: 14px; font-weight: 700; fill: #555555; letter-spacing: 1px; }
+      .panel { fill: #f5f5f5; stroke: #dddddd; }
+      .node { fill: #ffffff; stroke: #aaaaaa; stroke-width: 1.4; }
+      .input { fill: #eeeeee; }
+      .label { font-size: 19px; text-anchor: middle; }
+      .code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; font-size: 18px; text-anchor: middle; }
+      .detail { font-size: 16px; fill: #595959; text-anchor: middle; }
+      .edge { fill: none; stroke: #555555; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect width="760" height="1312" rx="16" fill="#ffffff" />
+  <text class="heading" x="32" y="42">Hearts</text>
+  <text class="subtitle" x="32" y="69">Arquitetura deste recorte</text>
+
+  <rect class="panel" x="16" y="92" width="728" height="672" rx="12" />
+  <text class="index" x="40" y="126">01</text>
+  <text class="section" x="78" y="127">Coleta, contato e rascunho</text>
+
+  <g aria-label="Conexões de coleta e decisões">
+    <path class="edge" data-from="Fixture" data-to="Provider" d="M 174 200 V 230" />
+    <path class="edge" data-from="Provider" data-to="Extract" d="M 174 278 V 308" />
+    <path class="edge" data-from="Extract" data-to="Normalize" d="M 174 356 V 410" />
+    <path class="edge" data-from="Extract" data-to="Store" d="M 300 332 H 388" />
+    <path class="edge" data-from="Normalize" data-to="Contact" d="M 174 458 V 512" />
+    <path class="edge" data-from="Evidence" data-to="Contact" d="M 388 434 H 344 V 536 H 300" />
+    <path class="edge" data-from="Signals" data-to="Offer" d="M 550 560 V 606" />
+    <path class="edge" data-from="Contact" data-to="Draft" d="M 174 560 V 684" />
+    <path class="edge" data-from="Offer" data-to="Draft" d="M 388 630 H 344 V 708 H 300" />
+  </g>
+
+  <g data-node="Fixture">
+    <rect class="node input" x="48" y="152" width="252" height="48" rx="8" />
+    <text class="label" x="174" y="183">Dados sintéticos</text>
+  </g>
+  <g data-node="Provider">
+    <rect class="node" x="48" y="230" width="252" height="48" rx="8" />
+    <text class="code" x="174" y="260">MockProvider</text>
+  </g>
+  <g data-node="Extract">
+    <rect class="node" x="48" y="308" width="252" height="48" rx="8" />
+    <text class="code" x="174" y="338">ExtractOnly</text>
+  </g>
+  <g data-node="Store">
+    <rect class="node" x="388" y="296" width="324" height="72" rx="8" />
+    <text class="code" x="550" y="326">ExtractRepository:</text>
+    <text class="detail" x="550" y="350">fake nos testes</text>
+  </g>
+  <g data-node="Normalize">
+    <rect class="node" x="48" y="410" width="252" height="48" rx="8" />
+    <text class="code" x="174" y="440">normalize</text>
+  </g>
+  <g data-node="Evidence">
+    <rect class="node input" x="388" y="410" width="324" height="48" rx="8" />
+    <text class="label" x="550" y="441">Evidência fornecida</text>
+  </g>
+  <g data-node="Contact">
+    <rect class="node" x="48" y="512" width="252" height="48" rx="8" />
+    <text class="code" x="174" y="542">assessContact</text>
+  </g>
+  <g data-node="Signals">
+    <rect class="node input" x="388" y="512" width="324" height="48" rx="8" />
+    <text class="label" x="550" y="543">Observações com fonte</text>
+  </g>
+  <g data-node="Offer">
+    <rect class="node" x="388" y="606" width="324" height="48" rx="8" />
+    <text class="code" x="550" y="636">analyzeOpportunity</text>
+  </g>
+  <g data-node="Draft">
+    <rect class="node" x="48" y="684" width="252" height="48" rx="8" />
+    <text class="code" x="174" y="714">createDraft</text>
+  </g>
+
+  <rect class="panel" x="16" y="788" width="728" height="152" rx="12" />
+  <text class="index" x="40" y="822">02</text>
+  <text class="section" x="78" y="823">Classificação de resposta</text>
+  <path class="edge" data-from="Reply" data-to="Classify" d="M 300 876 H 388" />
+  <g data-node="Reply">
+    <rect class="node input" x="48" y="852" width="252" height="48" rx="8" />
+    <text class="label" x="174" y="883">Texto de resposta</text>
+  </g>
+  <g data-node="Classify">
+    <rect class="node" x="388" y="852" width="324" height="48" rx="8" />
+    <text class="code" x="550" y="882">classifyReply</text>
+  </g>
+
+  <rect class="panel" x="16" y="964" width="728" height="316" rx="12" />
+  <text class="index" x="40" y="998">03</text>
+  <text class="section" x="78" y="999">Despacho</text>
+  <g aria-label="Conexões de despacho">
+    <path class="edge" data-from="Dispatch" data-to="Claim" d="M 268 1140 H 328 V 1064 H 388" />
+    <path class="edge" data-from="Dispatch" data-to="Sender" d="M 268 1140 H 388" />
+    <path class="edge" data-from="Dispatch" data-to="Outcome" d="M 268 1140 H 328 V 1232 H 388" />
+  </g>
+  <g data-node="Dispatch">
+    <rect class="node" x="48" y="1112" width="220" height="56" rx="8" />
+    <text class="code" x="158" y="1146">dispatch</text>
+  </g>
+  <g data-node="Claim">
+    <rect class="node" x="388" y="1028" width="324" height="72" rx="8" />
+    <text class="code" x="550" y="1058">DispatchStore:</text>
+    <text class="detail" x="550" y="1082">fake nos testes</text>
+  </g>
+  <g data-node="Sender">
+    <rect class="node" x="388" y="1112" width="324" height="72" rx="8" />
+    <text class="code" x="550" y="1142">MessageSender:</text>
+    <text class="detail" x="550" y="1166">mock ou fake</text>
+  </g>
+  <g data-node="Outcome">
+    <rect class="node" x="388" y="1208" width="324" height="48" rx="8" />
+    <text class="code" x="550" y="1238">accepted ou uncertain</text>
+  </g>
+</svg>
